@@ -47,17 +47,18 @@ data_files += [
         "data/sahara/style.css"
     ]),
     (os.path.join(appdata_dir, "dark"), [
-        "data/dark/background.png",
         "data/dark/name.cfg",
         "data/dark/style.css"
     ])
 ]
 
+# replace tlslite
+os.system("pip install http://download.electrum.org/tlslite-0.4.5.tar.gz")
 
 setup(
     name="Electrum",
     version=version.ELECTRUM_VERSION,
-    install_requires=['slowaes', 'ecdsa>=0.9'],
+    install_requires=['slowaes', 'ecdsa>=0.9', 'pbkdf2', 'requests', 'pyasn1', 'pyasn1-modules', 'qrcode'],
     package_dir={
         'electrum': 'lib',
         'electrum_gui': 'gui',
@@ -71,22 +72,26 @@ setup(
         'electrum.blockchain',
         'electrum.bmp',
         'electrum.commands',
+        'electrum.daemon',
         'electrum.i18n',
         'electrum.interface',
         'electrum.mnemonic',
         'electrum.msqr',
         'electrum.network',
+        'electrum.network_proxy',
+        'electrum.paymentrequest',
+        'electrum.paymentrequest_pb2',
         'electrum.plugins',
-        'electrum.pyqrnative',
         'electrum.simple_config',
         'electrum.socks',
+        'electrum.synchronizer',
         'electrum.transaction',
         'electrum.util',
         'electrum.verifier',
         'electrum.version',
         'electrum.wallet',
         'electrum.wallet_bitkey',
-        'electrum.wallet_factory',
+        'electrum.x509',
         'electrum_gui.gtk',
         'electrum_gui.qt.__init__',
         'electrum_gui.qt.amountedit',
@@ -98,7 +103,9 @@ setup(
         'electrum_gui.qt.main_window',
         'electrum_gui.qt.network_dialog',
         'electrum_gui.qt.password_dialog',
+        'electrum_gui.qt.paytoedit',
         'electrum_gui.qt.qrcodewidget',
+        'electrum_gui.qt.qrtextedit',
         'electrum_gui.qt.receiving_widget',
         'electrum_gui.qt.seed_dialog',
         'electrum_gui.qt.transaction_dialog',
@@ -107,6 +114,7 @@ setup(
         'electrum_gui.stdio',
         'electrum_gui.text',
         'electrum_plugins.aliases',
+        'electrum_plugins.bitnet',
         'electrum_plugins.coinbase_buyback',
         'electrum_plugins.exchange_rate',
         'electrum_plugins.labels',
@@ -115,9 +123,9 @@ setup(
         'electrum_plugins.virtualkeyboard',
     ],
     description="Lightweight Bitcoin Wallet",
-    author="ecdsa",
-    author_email="ecdsa@github",
+    author="Thomas Voegtlin",
+    author_email="thomasv1@gmx.de",
     license="GNU GPLv3",
-    url="http://electrum.org",
+    url="https://electrum.org",
     long_description="""Lightweight Bitcoin Wallet"""
 )
